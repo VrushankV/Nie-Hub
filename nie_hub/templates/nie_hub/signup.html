@@ -1,0 +1,49 @@
+{% extends "nie_hub/base.html" %}
+
+{% block content %}
+	<div class="col-lg-2">
+		<div class="vertical-menu">
+			<a href="{%url "home" %}">Home</a>
+			<a href="{%url "login" %}" >Login</a>
+			<a href="{%url "signup" %}" class="active">Sign Up</a>
+		</div>
+	</div>
+	<form class="form-group">
+		<label for="category">Are you a Student or a Teacher?</label>
+		<select name="category" id="category" class="form-control">
+		  <option value="volvo">-- Select an option --</option>
+		  <option value="student">Student</option>
+		  <option value="teacher">Teacher</option>
+		</select><br>
+
+		<label for="fname">First Name:</label>
+		<input type="text" name="fname" id="fname" class="form-control" required>
+
+		<label for="lname">Last Name:</label>
+		<input type="text" name="lname" id="lname" class="form-control" required>
+
+		<label for="branch">Branch:</label>
+		<input type="text" name="branch" id="branch" maxlength="3" class="form-control" required>
+
+		<label for="sem">Sem:</label>
+		<input type="number" name="sem" id="sem" min="1" max="8" class="form-control" required>
+
+		<label for="address">Address:</label>
+		<textarea name="address" id="address" class="form-control" rows="5"></textarea>
+
+		<label for="email">Email:</label>
+		<input type="text" name="email" id="email" class="form-control" required>
+
+		<label for="phone_number">Contact Number: </label>
+		<input type="text" name="phone_number" id="phone_number" class="form-control" maxlength="10" required>
+
+		<label for="usn">USN: </label>
+		<input type="text" name="usn" id="usn" class="form-control" required>
+
+		<label for="password">Enter a valid Password:  </label>
+		<input type="text" name="password" id="password" class="form-control" required><br><br>
+
+		<input type="submit" name="submit" class="btn btn-success">
+	</form>
+
+{% endblock %}

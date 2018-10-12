@@ -77,9 +77,13 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'read_default_file': '/etc/mysql/my.cnf',
-        },
+        'NAME' : 'nie_hub',
+        'USER' : 'root',
+        'PASSWORD' : '',
+        'DEFAULT-CHARACTER-SET' : 'utf8'
+        # 'OPTIONS': {
+        #     'read_default_file': '/etc/mysql/my.cnf',
+        # },
     }
 }
 

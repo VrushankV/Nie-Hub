@@ -8,10 +8,9 @@
 			<a href="{%url "signup" %}" class="active">Sign Up</a>
 		</div>
 	</div>
-	<form class="form-group">
+	<form id ="align" class="form-group" method="POST">{% csrf_token %}
 		<label for="category">Are you a Student or a Teacher?</label>
-		<select name="category" id="category" class="form-control">
-		  <option value="volvo">-- Select an option --</option>
+		<select name="category" id="category" class="form-control" onchange="category_change()">
 		  <option value="student">Student</option>
 		  <option value="teacher">Teacher</option>
 		</select><br>
@@ -20,10 +19,18 @@
 		<input type="text" name="fname" id="fname" class="form-control" required>
 
 		<label for="lname">Last Name:</label>
-		<input type="text" name="lname" id="lname" class="form-control" required>
+		<input type="text" name="lname" id="lname" class="form-control">
 
 		<label for="branch">Branch:</label>
-		<input type="text" name="branch" id="branch" maxlength="3" class="form-control" required>
+		<select name="branch" id="branch" class="form-control">
+			<option value="CE">CE</option>
+			<option value="CSE">CSE</option>
+			<option value="ECE">ECE</option>
+			<option value="EEE">EEE</option>
+			<option value="ISE">ISE</option>
+			<option value="ME">ME</option>
+			<option value="IPE">IPE</option>
+		</select>
 
 		<label for="sem">Sem:</label>
 		<input type="number" name="sem" id="sem" min="1" max="8" class="form-control" required>
@@ -41,9 +48,22 @@
 		<input type="text" name="usn" id="usn" class="form-control" required>
 
 		<label for="password">Enter a valid Password:  </label>
-		<input type="text" name="password" id="password" class="form-control" required><br><br>
+		<input type="password" name="password" id="password" class="form-control" required><br><br>
 
 		<input type="submit" name="submit" class="btn btn-success">
 	</form>
+	<!-- <script>
+
+		function category_change(){
+			var category = document.getElementById("category").value;
+			var sem = document.getElementById("sem");
+			
+			if(category == "teacher"){				
+				sem.disabled = true;
+			}else{
+				sem.disabled = false;
+			}
+		}
+	</script> -->
 
 {% endblock %}

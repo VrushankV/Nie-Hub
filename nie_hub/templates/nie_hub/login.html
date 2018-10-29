@@ -8,12 +8,19 @@
 				<a href="{%url "signup" %}" >Sign Up</a>
 			</div>
 		</div>
-		<form method="post" action="" class="form-group" style="float: left">
+		<form method="post" action="" class="form-group" style="float: left">{% csrf_token %}
 			<label for="uname">Username:</label>
 			<input type="text" name="uname" id="uname" class="form-control"><br>
 			<label for="pass">Password:</label>
 			<input type="password" name="pass" id="pass" class="form-control"><br>
+			{% if messages %}
+		<div class="messages">
+		    {% for message in messages %}
+		    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+		    {% endfor %}
+		</div>
+		{% endif %}	
 			<input type="submit" name="submit" class="btn btn-success">
-	 	</form>		
+	 	</form>	
 {% endblock %}
 

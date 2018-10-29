@@ -13,3 +13,9 @@ class User(models.Model):
 	usn = models.CharField(max_length = 10)
 	password = models.CharField(max_length = 20)
 	category = models.CharField(max_length = 10)
+
+	#def check_password(password,self):
+	#	if(password == self.password):
+	#		return True
+	#	else:	
+	#		return False	

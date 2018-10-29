@@ -1,11 +1,26 @@
 from django.shortcuts import render,redirect
 from .models import User
+from django.contrib import messages
 # Create your views here.
+
 def home(request):
 	return render(request,'nie_hub/home.html',{})
 
+
 def login(request):
-	return render(request,'nie_hub/login.html',{})	
+      if request.method=='POST':
+            m = User.objects.get(usn=request.POST['uname'])
+            if m.password == request.POST['pass']:
+                  request.session['usn'] = m.usn
+                  messages.success(request, "Welcome")
+                  return redirect("main")
+            else:
+                  messages.error(request, "Password does not match")
+                  return redirect("login")
+      else: 
+            return render(request,"nie_hub/login.html", {})
+
+
 
 def signup(request):
       if request.method == 'POST':
@@ -22,5 +37,12 @@ def signup(request):
             user.category= request.POST.get('category')
             user.save()
             return redirect("login")
-      else:   
+      else: 
             return render(request,'nie_hub/signup.html',{})
+
+
+
+def main(request):
+      return render(request,'nie_hub/main.html')
+
+

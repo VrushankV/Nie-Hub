@@ -1,0 +1,9 @@
+{% extends "nie_hub/mainBase.html" %}
+{% load static %}
+
+{% block content %}
+	<h2>Hello  </h2>
+	{% for key,value in request.session.items %}
+		<h3>{{ key }} => {{ value }}</h3>
+	{% endfor %}	
+{% endblock%}

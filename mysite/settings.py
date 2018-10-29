@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'nie_hub',
+    'posts',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -77,13 +79,9 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME' : 'nie_hub',
-        'USER' : 'root',
-        'PASSWORD' : '',
-        'DEFAULT-CHARACTER-SET' : 'utf8'
-        # 'OPTIONS': {
-        #     'read_default_file': '/etc/mysql/my.cnf',
-        # },
+        'OPTIONS': {
+            'read_default_file': '/etc/mysql/my.cnf',
+        },
     }
 }
 
@@ -126,3 +124,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

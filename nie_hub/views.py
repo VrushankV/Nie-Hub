@@ -1,10 +1,13 @@
 from django.shortcuts import render,redirect
+from django.http import HttpResponse
 from .models import User
 from django.contrib import messages
+from django.contrib.auth import logout
 # Create your views here.
 
 def home(request):
-	return render(request,'nie_hub/home.html',{})
+      print("hello")
+      return render(request,'nie_hub/home.html',{})
 
 
 def login(request):
@@ -42,7 +45,13 @@ def signup(request):
 
 
 
-def main(request):
-      return render(request,'nie_hub/main.html')
+def main(request):  
+      if request.session.get('usn') != None:
+            return render(request,'nie_hub/main.html')
+      else:
+            return HttpResponse("<h2>You are not logged in<h2>")      
 
 
+def logout_view(request):
+      logout(request)
+      return redirect("login")

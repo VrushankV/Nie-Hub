@@ -6,7 +6,6 @@ from django.contrib.auth import logout
 # Create your views here.
 
 def home(request):
-      print("hello")
       return render(request,'nie_hub/home.html',{})
 
 

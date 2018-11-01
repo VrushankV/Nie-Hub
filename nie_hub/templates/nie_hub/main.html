@@ -2,8 +2,5 @@
 {% load static %}
 
 {% block content %}
-	<h2>Hello  </h2>
-	{% for key,value in request.session.items %}
-		<h3>{{ key }} => {{ value }}</h3>
-	{% endfor %}	
+	<h3>Welcome {{request.session.usn}}</h3>
 {% endblock%}

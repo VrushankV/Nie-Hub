@@ -1,0 +1,14 @@
+{% extends "nie_hub/mainBase.html" %}
+{% block content %}
+	{% if length != 0 %}
+		{% for post in all_posts %}
+			<a href="/posts/{{post.post_id}}"><h3>{{post.title}}</h3></a>
+			<h3>{{post.date}}</h3>
+			<a href="{{ post.links.url }}">{{post.links}}</a>
+			<h3>by {{post.user_id.first_name}} {{post.user_id.last_name}}</h3>
+			<hr>
+		{% endfor %}
+	{% else %}
+		<h2>No posts found!</h2>
+	{% endif %}	
+{% endblock %}

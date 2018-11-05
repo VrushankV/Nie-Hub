@@ -27,4 +27,4 @@ def view_post(request):
 	length = len(all_posts)
 	return render(request,'posts/view_post.html',{'all_posts':all_posts, 'length':length})
 
-     
+ 

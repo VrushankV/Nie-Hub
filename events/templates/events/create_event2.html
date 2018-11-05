@@ -1,0 +1,28 @@
+{% extends "nie_hub/mainBase.html" %}
+{% block content %}
+	<form style="width: 60%;" method="POST">{% csrf_token %}
+
+		<label for="types">Enter the number of types of items?</label>
+		<input type="number" name="types" id="types" class="form-control">
+		<button class="btn btn-success" onclick="displayer()">OK</button>
+		<table class="table table-bordered">
+			<tr>
+				<th>Item Name</th>
+				<th>Category</th>
+			</tr>
+			<tbody id="insert"></tbody>
+			<script type="text/javascript">
+				function displayer(){
+					counter = document.getElementById("types").value;
+					for (var i = 0; i < counter; i++) {
+						document.getElementById("insert").innerHTML += '<tr><td><input type="text" width="30%" name="iname'+ i +'" id="iname'+ i +'" class="form-control" required></td><td><input type="text" name="category'+ i +'" id="category'+ i +'" class="form-control"></td></tr>';
+					}	
+				}
+			</script>
+		</table>
+
+			
+	<input type="submit" name="submit" id="sub" class="btn btn-success">
+	</form>
+{% endblock %}
+

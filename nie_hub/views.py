@@ -14,6 +14,7 @@ def login(request):
             m = User.objects.get(usn=request.POST['uname'])
             if m.password == request.POST['pass']:
                   request.session['usn'] = m.usn
+                  request.session['category'] = m.category
                   messages.success(request, "Welcome")
                   return redirect("main")
             else:

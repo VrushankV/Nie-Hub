@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'nie_hub',
     'posts',
+    'events',
 ]
 
 MIDDLEWARE = [

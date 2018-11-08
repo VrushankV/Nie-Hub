@@ -1,7 +1,9 @@
 {% extends "nie_hub/mainBase.html" %}
 {% block content %}
 	<h2>{{posts.title}}</h2>
-	<h4>{{posts.body}}</h4>
-	<img src="{{posts.links.url}}">
+	<h4>{{posts.body|linebreaks|safe}}</h4>
+	{% if posts.links.url != None %}
+		<a href="{{posts.links.url}}">{{posts.links}}</a>
+	{% endif %}
 
 {%endblock%}

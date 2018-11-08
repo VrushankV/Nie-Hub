@@ -29,6 +29,10 @@
 	width: 30%;
 }
 
-.messages{
-	
+body{
+    padding-top: 65px;
+}
+
+.date{
+    color: gray;
 }

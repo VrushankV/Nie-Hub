@@ -2,26 +2,33 @@
 {% block content %}
 	<h1>MANAGE EVENTS</h1>		
 	<hr>
+	{% if length != 0 %}
 	<form method="POST">{% csrf_token %}
 		<table class="table table-bordered">
 			<tr>
 				<th>Event Name</th>
 				<th>Item Name</th>
+				<th>Size</th>
 				<th>Requested Quantity</th>
 				<th>Available Quantity</th>
 				<th>Buyer Name</th>
 				<th>Status</th>
 			</tr>
-			{% for item in my_waiting_items %}
-				<tr>
-					<td>{{item.item_details_id.item_id.event_id.name}}</td>
-					<td>{{item.item_details_id.item_id.name}}</td>
-					<td>{{item.request_quantity}}</td>
-					<td>{{item.item_details_id.quantity}}</td>
-					<td>{{item.buyer_id.first_name}} {{item.buyer_id.last_name}}</td>
-					<td><input type="submit" class="btn btn-success" name="submit{{item.item_waiting_id}}" value="ISSUE"></td>
-				</tr>
-			{% endfor %}
+			
+				{% for item in my_waiting_items %}
+					<tr>
+						<td>{{item.item_details_id.item_id.event_id.name}}</td>
+						<td>{{item.item_details_id.item_id.name}}</td>
+						<td>{{item.item_details_id.size}}</td>
+						<td>{{item.request_quantity}}</td>
+						<td>{{item.item_details_id.quantity}}</td>
+						<td>{{item.buyer_id.first_name}} {{item.buyer_id.last_name}}</td>
+						<td><input type="submit" class="btn btn-success" name="submit{{item.item_waiting_id}}" value="ISSUE"></td>
+					</tr>
+				{% endfor %}	
 		</table>
 	</form>	
+	{% else %}
+	<h2>You haven't received any orders for your event yet!</h2>
+	{% endif %}
 {% endblock %}

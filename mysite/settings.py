@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'nie_hub',
     'posts',
     'events',
+    'books',
 ]
 
 MIDDLEWARE = [
@@ -83,6 +84,7 @@ DATABASES = {
         'OPTIONS': {
             'read_default_file': '/etc/mysql/my.cnf',
         },
+        'ATOMIC_REQUEST': True,
     }
 }
 

@@ -36,12 +36,33 @@
 			          <li><a href="{% url "create1" %}">Create Event</a></li>
 			          <li><a href="{% url "manage" %}">Manage Events</a></li>
 			          <li><a href="{% url "event_view" %}">View Events</a></li>
+			          <li><a href="{% url "booked_items"%}">Booked Items</a></li>
 			        </ul>
 			      </li>
-			      <li><a href="#">Books</a></li>
+			       <li class="dropdown">
+			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Books
+			        <span class="caret"></span></a>
+			        <ul class="dropdown-menu">
+					  <li><a href="{% url "buy" %}">Buy Books</a></li>
+			          <li><a href="{% url "sell" %}">Sell Books</a></li>
+			          <li><a href="{% url "waiting_books" %}">View Bookings</a></li>
+			          <li><a href="{% url "transaction_books" %}">View Transactions</a></li>
+			        </ul>
+			      </li>
 			    </ul>
 			    <ul class="nav navbar-nav navbar-right">
-			      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+			      <li class="dropdown">
+			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Profile
+			        <span class="caret"></span></a>
+			        <ul class="dropdown-menu">
+			          <li><a href="{% url "myprofile" %}">My Profile</a></li>
+			          <li><a href="{% url "mybooks" %}">My Books</a></li>
+			          <li><a href="{% url "myevents" %}">My Events</a></li>
+			          {% if request.session.category == "teacher" %}
+			          	<li><a href="{% url "myposts" %}">My Posts</a></li>
+			          {% endif %}
+			        </ul>
+			      </li>	
 			      <li><a href="{% url "logout" %}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
 			    </ul>
 			  </div>  

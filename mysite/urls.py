@@ -23,6 +23,7 @@ urlpatterns = [
     path('',include('nie_hub.urls')),
     path('posts/',include('posts.urls')),
     path('events/',include('events.urls')),
+    path('books/',include('books.urls')),
 ]
 
 

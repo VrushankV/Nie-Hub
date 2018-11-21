@@ -7,5 +7,5 @@ from django.conf.urls import url
 urlpatterns=[
 	path('new',views.create_post ,name="newPost"),
 	path('view',views.view_post,name = "viewPost"),
-	url(r'(?P<pk>\d+)$',DetailView.as_view(model=Posts,template_name="posts/post_detail.html"))
+	path('<int:pk>/', views.view_detail, name = "view_detail"),
  ]

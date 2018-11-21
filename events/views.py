@@ -10,6 +10,7 @@ def create1(request):
             if request.method == 'POST':
                   uid = User.objects.get(usn = request.session['usn'])
                   events=Events()
+                  submit_type = request.POST.get('submit')
                   events.name = request.POST.get('ename')
                   events.body= request.POST.get('body')
                   events.event_date= request.POST.get('edate')
@@ -17,9 +18,11 @@ def create1(request):
                   events.create_date=timezone.now()
                   events.owner_id= uid
                   events.save()
-
                   url = "create2/"+str(events.event_id)
-                  return redirect(url)
+                  if( submit_type == "NEXT"):
+                        return redirect(url)
+                  else:
+                        return redirect("main")      
             else:
                   return render(request,"events/create_event1.html", {})
       else:
@@ -77,7 +80,7 @@ def create3(request,pk):
                                           price = int(price)
                                           Item_details.objects.create(size= size,quantity= qty,price = price,item_id= item)
 
-                  return redirect("main")
+                  return render(request,"events/event_success.html")
             else:
                   all_items = Items.objects.filter(event_id = pk)
                   return render(request,"events/create_event3.html",{'all_items':all_items})
@@ -86,8 +89,12 @@ def create3(request,pk):
 
 def event_view(request):  
       if request.session.get('usn') != None:
-            all_data = Events.objects.all().order_by("event_date")
-            return render(request,'events/event_view.html',{'all_events':all_data})
+            user = request.session.get('usn');
+            user_id = User.objects.get(usn = user)
+            all_data = Events.objects.all().exclude(owner_id = user_id).order_by("-event_date")
+            past_events = all_data.filter(event_date__lt = timezone.now())
+            upcoming_events = all_data.filter(event_date__gte = timezone.now())
+            return render(request,'events/event_view.html',{'upcoming_events':upcoming_events,'past_events':past_events})
       else:
             return HttpResponse("<h2>You are not logged in<h2>")                        
 
@@ -98,16 +105,19 @@ def event_detail_view(request,pk):
             event = Events.objects.get(event_id = pk)
             items = Items.objects.filter(event_id = event)
             item_details = Item_details.objects.filter(item_id__in = items)
+            print(item_details)
             if request.method == "POST":
                   for item in item_details:
+                        print("hi")
                         quantity_name = "order-qty"+ str(item.item_details_id)
                         choice_name = 'order-choice' + str(item.item_details_id)
                         if request.POST.get(choice_name)!=None:
                               quantity = request.POST.get(quantity_name)
                               Waiting_items.objects.create(request_quantity = quantity,date = timezone.now(),item_details_id = item,buyer_id = user)
-                              return redirect("main")
+                              
+                  return redirect("booked_items")
             else:      
-                  return render(request,'events/event_detail_view.html',{'event':event,'items':items,'item_details':item_details})
+                  return render(request,'events/event_detail_view.html',{'event':event,'items_length': len(items),'item_details':item_details,'length_u':len(upcoming_events),'length_p':past_events})
       else:
             return HttpResponse("<h2>You are not logged in<h2>")
 
@@ -124,7 +134,8 @@ def manage(request):
                               waiting_item = Waiting_items.objects.get(item_waiting_id = waiting_item_id)
                               print(waiting_item.request_quantity)
                               Item_details.objects.filter(item_details_id = waiting_item.item_details_id.item_details_id).update(quantity = F('quantity')- waiting_item.request_quantity)
-                              Transaction_items.objects.create(date= timezone.now(), item_details_id= waiting_item.item_details_id, buyer_id= waiting_item.buyer_id)
+                              
+                              Transaction_items.objects.create(date= timezone.now(),quantity_sold = waiting_item.request_quantity,size = waiting_item.item_details_id.size , buyer_id= waiting_item.buyer_id,price= waiting_item.item_details_id.price ,category= waiting_item.item_details_id.item_id.category,name= waiting_item.item_details_id.item_id.name ,owner_id = waiting_item.item_details_id.item_id.event_id.owner_id)
                               Waiting_items.objects.filter(item_waiting_id = waiting_item.item_waiting_id).delete()
                   return redirect("manage")
             else:   
@@ -133,6 +144,15 @@ def manage(request):
                   for waiting_item in all_waiting_items:
                         if waiting_item.item_details_id.item_id.event_id.owner_id == user:
                               my_waiting_items.append(waiting_item)      
-                  return render(request,"events/manage_event.html",{'my_waiting_items':my_waiting_items})
+                  return render(request,"events/manage_event.html",{'my_waiting_items':my_waiting_items, 'length': len(my_waiting_items   )})
       else:
-          return HttpResponse("<h2>You are not logged in<h2>")            
+            return HttpResponse("<h2>You are not logged in<h2>")            
+
+
+def booked_items(request):
+      if request.session.get('usn') != None:
+            user = User.objects.get(usn = request.session['usn'])
+            all_items = Waiting_items.objects.filter(buyer_id = user).order_by("-date")
+            return render(request,'events/booked_items.html',{'all_items':all_items,'length':len(all_items)})
+      else:
+            return HttpResponse("<h2>You are not logged in<h2>")      

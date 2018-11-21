@@ -1,9 +1,20 @@
 {% extends "nie_hub/mainBase.html" %}
 {% block content %}
-	<h2>{{posts.title}}</h2>
-	<h4>{{posts.body|linebreaks|safe}}</h4>
-	{% if posts.links.url != None %}
-		<a href="{{posts.links.url}}">{{posts.links}}</a>
-	{% endif %}
-
+<div class="row">
+<div class="col-sm-6">
+	<div class="thumbnail">
+      <div class="caption">
+       	<h2>{{post.title}}</h2><hr>
+        <h4>{{post.body|linebreaks|safe}}</h4>
+        <h3>Attachments</h3>
+		{% for attachment in attachments %}
+		<div> <span class="glyphicon glyphicon-link"></span><a href="{{attachment.attachment_link.url}}">{{attachment.attachment_link}}</a><br></div>
+		{% endfor %}
+      </div>
+    </div>
+</div>
+</div>	
+	
+	
+	
 {%endblock%}

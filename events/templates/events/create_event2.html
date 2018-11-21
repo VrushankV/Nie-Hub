@@ -1,4 +1,8 @@
 {% extends "nie_hub/mainBase.html" %}
+{% load static %}
+{% block styles %}
+<script type="text/javascript" src=" {% static "js/events.js"%}"></script>
+{% endblock %}
 {% block content %}
 	<form style="width: 60%;" method="POST">{% csrf_token %}
 

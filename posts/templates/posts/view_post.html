@@ -3,18 +3,24 @@
 	<h1>Posts</h1>
 	{% if length != 0 %}
 		{% for post in all_posts %}
-			<div class="row" style="background-color: #f5f5f0;">
-				<div class="col-sm-6">
-					<a href="/posts/{{post.post_id}}"><h3>{{post.title}}</h3></a>
+		<div class="row">
+			<div class="col-sm-6" style="background-color: #9999ff;">
+			<div class="thumbnail">
+		      <div class="caption">
+		      	<div class="well"><a href="{% url 'view_detail' pk=post.pk %}"><h3>{{post.title}}</h3></a></div>	
 					<div style="text-align: left;font-size: 15px;">--{{post.date}}</div><br>
 					<p>{{post.body}}</p>
 					{% if post.links  %}
 					<a href="{{ post.links.url }}">{{post.links}}</a>
 					{% endif %}
 					<h3>by {{post.user_id.first_name}} {{post.user_id.last_name}}</h3>
-					<hr style="border-color: black">
-				</div>
-			</div>
+					<hr style="border-color: black">    
+		      </div>
+		      </div>
+		    </div>
+			
+				
+		</div>
 		{% endfor %}
 	{% else %}
 		<h2>No posts found!</h2>

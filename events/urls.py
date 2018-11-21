@@ -9,4 +9,5 @@ urlpatterns = [
 	path('manage', views.manage, name="manage"),
 	path('event_view',views.event_view, name="event_view"),
 	path('<int:pk>/',views.event_detail_view,name="event_detail_view"),	
+	path('booked_items',views.booked_items, name="booked_items"),
 ]

@@ -3,27 +3,45 @@ from nie_hub.models import User
 from .models import *
 from django.http import HttpResponse
 from django.utils import timezone
+from django.db import connection
 
 # Create your views here.
 def sell(request):
 	if request.method == 'POST':
-		uid = User.objects.get(usn = request.session['usn'])
-		books=Books()
-		books.branch= request.POST.get('branch')
-		books.sem= request.POST.get('sem')
-		books.title = request.POST.get('title').upper()
-		books.author= request.POST.get('author').upper()
-		books.save()
-		bid=Books.objects.get(book_id=books.book_id)
-		book_details=Book_details()
-		book_details.edition= request.POST.get('edition')
-		book_details.price= request.POST.get('price')
-		book_details.book_id=bid
-		book_details.owner_id=uid
-		book_details.save()
+		user = User.objects.get(usn = request.session['usn'])
+		# bid=Books.objects.get(book_id=books.book_id)
+
+		# books=Books()
+		# books.branch= request.POST.get('branch')
+		# books.sem= request.POST.get('sem')
+		# books.title = request.POST.get('title').upper()
+		# books.author= request.POST.get('author').upper()
+		# books.save()
+		
+		# book_details=Book_details()
+		# book_details.edition= request.POST.get('edition')
+		# book_details.price= request.POST.get('price')
+		# book_details.book_id=bid
+		# book_details.owner_id=uid
+		# book_details.save()
+
+		branch= request.POST.get('branch')
+		sem= request.POST.get('sem')
+		title = request.POST.get('title').upper()
+		author= request.POST.get('author').upper()
+
+		
+		edition= request.POST.get('edition')
+		price= request.POST.get('price')
+		# book_id=bid
+		owner_id=user.uid
+		
+
+		cursor = connection.cursor()
+		cursor.callproc('sell',[branch,sem,title,author,edition,price,owner_id,])
 		return redirect("main")
 	else: 
-		return render(request,"books/sell.html", {})
+		return render(request,"books/sell.html",  {})
 
 def buy(request): 
     return render(request,'books/buy.html', {})
@@ -52,8 +70,6 @@ def waiting_books(request):
 			waiting_books.book_details_id=bdid
 			waiting_books.buyer_id=uid
 			waiting_books.save()
-			bdid.status=0
-			bdid.save()
 			return render(request,"books/booked.html")
 		else:
 			return render(request,"books/missed.html")
@@ -61,12 +77,9 @@ def waiting_books(request):
 	else:
 		uid = User.objects.get(usn = request.session['usn'])
 		wid = Waiting_books.objects.filter(buyer_id=uid).order_by("-date")
-		# bdid= Book_details.objects.filter(book_details_id=wid.book_details_id)
-		# bid= Books.objects.filter(book_id=bdid.book_id)
 		length=len(wid)
 		bdid1= Book_details.objects.filter(owner_id=uid)
 		wid1 = Waiting_books.objects.filter(book_details_id__in=bdid1).order_by("-date")
-		# bid1= Books.objects.filter(book_id=bdid1.book_id)
 		length1=len(wid1)
 		return render(request,"books/waiting_books.html",{"wid":wid,"length":length,"wid1":wid1,"length1":length1})
 

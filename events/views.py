@@ -94,7 +94,7 @@ def event_view(request):
             all_data = Events.objects.all().exclude(owner_id = user_id).order_by("-event_date")
             past_events = all_data.filter(event_date__lt = timezone.now())
             upcoming_events = all_data.filter(event_date__gte = timezone.now())
-            return render(request,'events/event_view.html',{'upcoming_events':upcoming_events,'past_events':past_events})
+            return render(request,'events/event_view.html',{'upcoming_events':upcoming_events,'past_events':past_events,'length_u':len(upcoming_events),'length_p':past_events})
       else:
             return HttpResponse("<h2>You are not logged in<h2>")                        
 
@@ -117,7 +117,7 @@ def event_detail_view(request,pk):
                               
                   return redirect("booked_items")
             else:      
-                  return render(request,'events/event_detail_view.html',{'event':event,'items_length': len(items),'item_details':item_details,'length_u':len(upcoming_events),'length_p':past_events})
+                  return render(request,'events/event_detail_view.html',{'event':event,'items_length': len(items),'item_details':item_details})
       else:
             return HttpResponse("<h2>You are not logged in<h2>")
 

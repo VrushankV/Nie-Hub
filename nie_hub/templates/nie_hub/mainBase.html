@@ -43,7 +43,8 @@
 			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Books
 			        <span class="caret"></span></a>
 			        <ul class="dropdown-menu">
-					  <li><a href="{% url "buy" %}">Buy Books</a></li>
+					  <li><a href="{% url "buy" %}">Buy Books(based on all details)</a></li>
+			          <li><a href="{% url "buy1" %}">Buy Books(based on sem)</a></li>
 			          <li><a href="{% url "sell" %}">Sell Books</a></li>
 			          <li><a href="{% url "waiting_books" %}">View Bookings</a></li>
 			          <li><a href="{% url "transaction_books" %}">View Transactions</a></li>

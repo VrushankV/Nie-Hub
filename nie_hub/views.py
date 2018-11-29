@@ -19,6 +19,8 @@ def login(request):
             if m.password == request.POST['pass']:
                   request.session['usn'] = m.usn
                   request.session['category'] = m.category
+                  request.session['fname'] = m.first_name
+                  request.session['lname'] = m.last_name
                   messages.success(request, "Welcome")
                   return redirect("main")
             else:
@@ -99,12 +101,12 @@ def myevents(request):
                               k=int(key[6:])
                   uid = User.objects.get(usn = request.session['usn'])
                   eid = Events.objects.get(event_id=k).delete()
-                  eid = Events.objects.filter(owner_id=uid)
+                  eid = Events.objects.filter(owner_id=uid).order_by("-create_date")
                   length=len(eid)
                   return render(request,'nie_hub/myevents.html',{"eid":eid,"length":length})
             else:
                   uid = User.objects.get(usn = request.session['usn'])
-                  eid = Events.objects.filter(owner_id=uid)
+                  eid = Events.objects.filter(owner_id=uid).order_by("-create_date")
                   length=len(eid)
                   return render(request,'nie_hub/myevents.html',{"eid":eid,"length":length})    
       else:
@@ -118,13 +120,13 @@ def myposts(request):
                               k=int(key[6:])
                   uid = User.objects.get(usn = request.session['usn'])
                   pid=Posts.objects.get(post_id=k).delete()
-                  pid=Posts.objects.filter(user_id=uid)
+                  pid=Posts.objects.filter(user_id=uid).order_by("-date")
                   aid=Attachments.objects.filter(post_id__in=pid)
                   length=len(pid)
                   return render(request,'nie_hub/myposts.html',{"pid":pid,"aid":aid,"length":length})
             else:
                   uid = User.objects.get(usn = request.session['usn'])
-                  pid=Posts.objects.filter(user_id=uid)
+                  pid=Posts.objects.filter(user_id=uid).order_by("-date")
                   aid=Attachments.objects.filter(post_id__in=pid)
                   length=len(pid)
                   return render(request,"nie_hub/myposts.html",{"pid":pid,"aid":aid,"length":length}) 

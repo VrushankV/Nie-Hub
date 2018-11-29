@@ -31,5 +31,5 @@ class Transaction_books(models.Model):
 	author1= models.CharField(max_length=30,null=True)
 	edition1=models.IntegerField(null=True)
 	price1=models.IntegerField(null=True)
-	owner_id1=models.CharField(max_length=30,null=True)
-	buyer_id1=models.CharField(max_length=30,null=True)
+	owner_id1 = models.ForeignKey(User,on_delete=models.CASCADE, related_name = 'owner_id1') 
+	buyer_id1 = models.ForeignKey(User,on_delete=models.CASCADE, related_name = 'buyer_id1')

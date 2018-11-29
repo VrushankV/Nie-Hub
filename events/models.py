@@ -11,7 +11,6 @@ class Events(models.Model):
 	create_date = models.DateTimeField(null= True)
 	venue = models.CharField(max_length=30,null=True)
 	owner_id = models.ForeignKey(User, on_delete=models.CASCADE)
-	interested_count = models.IntegerField(default= 0)
 
 class Items(models.Model):
 	item_id= models.AutoField(primary_key = True)

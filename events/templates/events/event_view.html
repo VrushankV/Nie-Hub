@@ -3,7 +3,7 @@
 	<h1>Events!</h1>
 	<hr>
 	
-	{% if length_u != 0 or length_p != 0%}
+	{% if length_u != 0 %}
 	<h2>Upcoming Events</h2>
 	    {% for event in upcoming_events %}
 		<div class="row">
@@ -24,6 +24,7 @@
 			
 			
 		{% endfor %}
+	{% elif length_p != 0 %}
 	<h2>Past Events</h2>
 		{% for event in past_events %}
 		<div class="row">

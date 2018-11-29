@@ -17,6 +17,7 @@
 	        <div class="date" style="display: inline-block;">-On {{event.event_date}}</div>
 			<div class="venue well well-sm" style="display: inline-block;"><span class="glyphicon glyphicon-map-marker"></span>{{event.venue}}</div>
 	        <p>{{event.body|linebreaks}}</p>
+	   
 	        {% if items_length != 0 %}
 	        <button class="btn btn-default" onclick="view()">View Items</button>
 	        <div id="item-view" style="display: none;">
